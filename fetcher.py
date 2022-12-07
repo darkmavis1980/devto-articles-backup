@@ -16,7 +16,9 @@ parser.add_argument('username', metavar='U', type=str,
 
 class MissingIdException(Exception):
     pass
-
+'''
+Add html comment as meta information about the article
+'''
 def addArticleMeta(article, file):
     articleId = article["id"]
     url = article["url"]
@@ -28,6 +30,9 @@ def addArticleMeta(article, file):
     file.write("<!-- published_at:{} -->\n".format(published_at))
     file.write("<!-- tags:{} -->\n".format(tags))
 
+'''
+Take the article JSON data, and save it in a file, by default in MarkDown
+'''
 def saveArticle(article):
     body = "body_markdown"
     extension = "md"
@@ -43,6 +48,9 @@ def saveArticle(article):
         outFile.write(article[body])
         outFile.close()
 
+'''
+Take the article ID as input and fetch the data from the API
+'''
 def fetchArticle(articleId):
     try:
         if articleId is None and not articleId.isNumeric():
@@ -58,7 +66,9 @@ def fetchArticle(articleId):
     except:
         print("Cannot load article id {}".format(articleId))
 
-
+'''
+Fetches all the articles from Dev.to for a given account
+'''
 def fetchArticles():
     try:
         args = parser.parse_args()
