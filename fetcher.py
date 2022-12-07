@@ -29,9 +29,9 @@ def fetchPost(articleId):
             raise MissingIdException
 
         articleUrl = "{}articles/{}".format(foremApi, articleId)
-        print(articleUrl)
         response = requests.get(articleUrl)
         article = response.json()
+        print("Fetching article: {}".format(article["slug"]))
         body = "body_markdown"
         extension = "md"
         if fileFormat != "markdown":
@@ -40,7 +40,7 @@ def fetchPost(articleId):
         if not os.path.exists(destFolder):
             print("Createing missing folder {}".format(destFolder))
             os.mkdir(destFolder)
-        with open("{}/{}.{}".format(destFolder, article["id"], extension), "w") as outFile:
+        with open("{}/{}-{}.{}".format(destFolder, article["id"], article["slug"], extension), "w") as outFile:
             addArticleMeta(article, outFile)
             outFile.write("# {}\n\r".format(article['title']))
             outFile.write(article[body])
@@ -57,8 +57,8 @@ def fetchPosts():
     response = requests.get(allArticlesUrl)
     listArticles = response.json()
     for article in listArticles:
-        # print(article['id'])
         fetchPost(article['id'])
+    print("Done!")
 
 if __name__ == "__main__":
     fetchPosts()
