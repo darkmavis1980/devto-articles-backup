@@ -18,6 +18,7 @@ parser.add_argument("-l", "--limit", type=int, help="Limit of articles to fetch 
 
 class MissingIdException(Exception):
     pass
+
 '''
 Add html comment as meta information about the article
 '''
