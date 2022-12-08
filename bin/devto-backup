@@ -1,6 +1,6 @@
 #! /usr/bin/env python3
 
-from devtoBackup.fetcher import fetchArticles
+from devtoBackup import fetchArticles
 
 if __name__ == "__main__":
     fetchArticles()
