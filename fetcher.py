@@ -5,14 +5,16 @@ import argparse
 from lib.conf import getConfig
 
 config = getConfig()
-foremApi = config.get('DEVTO', 'API')
-perPage = config.get('DEVTO', 'PER_PAGE')
-destFolder = config.get('LOCAL', 'DEST_FOLDER')
-fileFormat = config.get('LOCAL', 'FORMAT')
+foremApi = config.get("DEVTO", "API")
+perPage = config.get("DEVTO", "PER_PAGE")
+destFolder = config.get("LOCAL", "DEST_FOLDER")
+fileFormat = config.get("LOCAL", "FORMAT")
 
-parser = argparse.ArgumentParser(description='Fetches articles from Dev.to APIs')
-parser.add_argument('username', metavar='U', type=str,
-                    help='the username to fetch')
+parser = argparse.ArgumentParser(description="Fetches articles from Dev.to APIs")
+parser.add_argument("username", metavar="U", type=str,
+                    help="the username to fetch")
+parser.add_argument("-p", "--page", type=int, help="Set the page to download", default=1)
+parser.add_argument("-l", "--limit", type=int, help="Limit of articles to fetch per request", default=perPage)
 
 class MissingIdException(Exception):
     pass
@@ -73,14 +75,20 @@ def fetchArticles():
     try:
         args = parser.parse_args()
         username = args.username
-        allArticlesUrl = "{}articles?username={}&page=1&per_page={}".format(foremApi, username, perPage)
+        page = args.page
+        limit = args.limit
+        print("Fetching data from Dev.to APIs")
+        allArticlesUrl = "{}articles?username={}&page={}&per_page={}".format(foremApi, username, page, limit)
         response = requests.get(allArticlesUrl)
         listArticles = response.json()
+        print("Downloading articles")
         for article in listArticles:
             fetchArticle(article['id'])
         print("Done!")
     except argparse.ArgumentError:
         print("Missing some parameters")
+    except:
+        print("Something went wrong, maybe you mispelled something?")
 
 if __name__ == "__main__":
     fetchArticles()
