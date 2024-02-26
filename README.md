@@ -12,16 +12,14 @@ Clone the `conf.sample.ini` file in the `conf/` folder, and name it `conf.ini`.
 Run it in an virtual env:
 
 ```sh
-pipenv shell
+python3 -m venv venv
+
+source ./venv/bin/activate
 ```
 
 Then install dependencies:
 
 ```sh
-# with pipenv
-pipenv install
-
-# or just pip
 pip install -r requirements.txt
 ```
 
@@ -30,10 +28,10 @@ pip install -r requirements.txt
 Run the command, which expect one argument being the `username`:
 
 ```sh
-python3 devtoBackup <username>
+python devtoBackup <username>
 
 # example
-python3 devtoBackup someusername
+python devtoBackup someusername
 ```
 
 By default it will download the first 100 records, or whatever number you set in the `PER_PAGE` variable in the `conf.ini` file.
@@ -46,7 +44,7 @@ Example:
 
 ```bash
 # It will download the articles from 11 to 20
-python3 devtoBackup someusername --page=2 --limit=10
+python devtoBackup someusername --page=2 --limit=10
 ```
 
 The script will add the files in the `articles` folder, which can be changed by setting it in the `conf/conf.ini` file.

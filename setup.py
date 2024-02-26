@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="devto-articles-backup", # Replace with your own username
-    version="0.2.0",
+    version="0.3.0",
     author="Alessio Michelini",
     author_email="alessio@michelini.dev",
     description="Small package to fetch articles from Dev.to",
